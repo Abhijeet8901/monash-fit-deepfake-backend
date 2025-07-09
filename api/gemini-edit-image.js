@@ -42,7 +42,7 @@ export default async function handler(req, res) {
           generationConfig: {
             temperature: 0.8,
             candidateCount: 1,
-            seed,
+            seed: seed,
             responseModalities: ["TEXT", "IMAGE"],
           },
         }),
