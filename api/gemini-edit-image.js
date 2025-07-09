@@ -11,7 +11,7 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method Not Allowed' });
   }
 
-  const { prompt, imageUrl, seed } = req.body;
+  const { prompt, base64Image, seed } = req.body;
   const apiKey = process.env.GEMINI_API_KEY;
 
   if (!apiKey) {
@@ -19,9 +19,6 @@ export default async function handler(req, res) {
   }
 
   try {
-    const imgBuffer = await fetch(imageUrl).then(r => r.arrayBuffer());
-    const base64Image = Buffer.from(imgBuffer).toString('base64');
-
     const geminiRes = await fetch(
       `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`,
       {
@@ -34,7 +31,7 @@ export default async function handler(req, res) {
                 {
                   inlineData: {
                     mimeType: 'image/jpeg',
-                    data: base64Image,
+                    data: base64Image, 
                   },
                 },
                 { text: prompt },
