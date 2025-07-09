@@ -12,6 +12,10 @@ export default async function handler(req, res) {
   }
 
   const { prompt, base64Image, seed } = req.body;
+  console.log('Received request body:', req.body);
+  console.log('Prompt:', prompt);
+  console.log('Base64 Image Length:', base64Image ? base64Image.slice(0,100)  : 'No image provided');  
+  console.log('Seed:', seed);
   const apiKey = process.env.GEMINI_API_KEY;
 
   if (!apiKey) {
@@ -28,14 +32,15 @@ export default async function handler(req, res) {
           contents: [
             {
               parts: [
-                { text: prompt },
+                { 
+                  text: prompt 
+                },
                 {
                   inlineData: {
                     mimeType: 'image/jpeg',
                     data: base64Image 
                   }
-                }
-                
+                }                
               ]
             }
           ],
