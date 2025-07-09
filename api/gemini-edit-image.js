@@ -82,53 +82,57 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method Not Allowed' });
   }
 
-  const { prompt, base64Image, seed } = req.body;
-  const apiKey = process.env.GEMINI_API_KEY;
+  return res.status(200).json({
+    message: 'Switching api method',  
+    req_body: req.body,
+  });
+  // const { prompt, base64Image, seed } = req.body;
+  // const apiKey = process.env.GEMINI_API_KEY;
 
-  if (!apiKey) {
-    return res.status(500).json({ error: 'Missing Gemini API key' });
-  }
+  // if (!apiKey) {
+  //   return res.status(500).json({ error: 'Missing Gemini API key' });
+  // }
 
-  try {
-    const ai = new GoogleGenAI({ apiKey });
+  // try {
+  //   const ai = new GoogleGenAI({ apiKey });
 
-    const contents = [
-      { text: prompt },
-      {
-        inlineData: {
-          mimeType: 'image/jpeg',
-          data: base64Image,
-        },
-      },
-    ];
+  //   const contents = [
+  //     { text: prompt },
+  //     {
+  //       inlineData: {
+  //         mimeType: 'image/jpeg',
+  //         data: base64Image,
+  //       },
+  //     },
+  //   ];
 
-    const response = await ai.models.generateContent({
-      model: 'gemini-2.0-flash-exp-image-generation',
-      contents: contents,
-      config: {
-        responseModality: [Modality.IMAGE , Modality.TEXT],
-        seed: seed || undefined,
-      },
-    });
+  //   const response = await ai.models.generateContent({
+  //     model: 'gemini-2.0-flash-exp-image-generation',
+  //     contents: contents,
+  //     config: {
+  //       responseModality: [Modality.IMAGE , Modality.TEXT],
+  //       seed: seed || undefined,
+  //     },
+  //   });
 
-    const imagePart = response.candidates[0].content.parts.find(
-      (part) => part.inlineData
-    );
+  //   const imagePart = response.candidates[0].content.parts.find(
+  //     (part) => part.inlineData
+  //   );
 
-    if (!imagePart) {
-      return res.status(500).json({ error: 'No image data returned' });
-    }
+  //   if (!imagePart) {
+  //     return res.status(500).json({ error: 'No image data returned' });
+  //   }
 
-    const imageData = imagePart.inlineData.data;
+  //   const imageData = imagePart.inlineData.data;
 
-    res.status(200).json({
-      generatedImageUrl: `data:image/jpeg;base64,${imageData}`,
-      result: response,
-      req_body: req.body
+  //   res.status(200).json({
+  //     generatedImageUrl: `data:image/jpeg;base64,${imageData}`,
+  //     result: response,
+  //     req_body: req.body
 
-    });
-  } catch (error) {
-    console.error('Error during Gemini API call:', error);
-    res.status(500).json({ error: 'Something went wrong with Gemini API' });
-  }
+  //   });
+  // } catch (error) {
+  //   console.error('Error during Gemini API call:', error);
+  //   res.status(500).json({ error: 'Something went wrong with Gemini API' });
+  // }
 }
