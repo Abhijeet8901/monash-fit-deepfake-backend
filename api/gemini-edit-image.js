@@ -55,6 +55,8 @@ export default async function handler(req, res) {
     res.status(200).json({
       generatedImageUrl: `data:image/jpeg;base64,${imageData}`,
       result: result,
+      req_body: req.body,
+
     });
   } catch (err) {
     console.error(err);
