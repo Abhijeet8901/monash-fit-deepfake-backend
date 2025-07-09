@@ -55,9 +55,7 @@ export default async function handler(req, res) {
     const imageData = result?.candidates?.[0]?.content?.parts?.find(p => p.inlineData)?.inlineData?.data;
 
     res.status(200).json({
-      generatedImageUrl: `data:image/jpeg;base64,${imageData}`,
-      result: result,
-      req_body: req.body,
+      generatedImageUrl: `data:image/jpeg;base64,${imageData}`
 
     });
   } catch (err) {
