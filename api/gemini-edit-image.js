@@ -43,6 +43,7 @@ export default async function handler(req, res) {
             temperature: 0.8,
             candidateCount: 1,
             seed,
+            responseModalities: ["IMAGE"],
           },
         }),
       }
