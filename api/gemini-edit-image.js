@@ -11,11 +11,8 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method Not Allowed' });
   }
 
-  const { prompt, base64Image, seed } = req.body;
-  console.log('Received request body:', req.body);
-  console.log('Prompt:', prompt);
-  console.log('Base64 Image Length:', base64Image ? base64Image.slice(0,100)  : 'No image provided');  
-  console.log('Seed:', seed);
+  const { prompt, imageUrl, seed } = req.body;
+
   const apiKey = process.env.GEMINI_API_KEY;
 
   if (!apiKey) {
@@ -38,7 +35,7 @@ export default async function handler(req, res) {
                 {
                   inlineData: {
                     mimeType: 'image/jpeg',
-                    data: base64Image 
+                    data: imageUrl 
                   }
                 }                
               ]
