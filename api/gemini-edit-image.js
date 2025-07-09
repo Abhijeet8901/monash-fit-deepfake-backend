@@ -28,13 +28,14 @@ export default async function handler(req, res) {
           contents: [
             {
               parts: [
+                { text: prompt },
                 {
                   inlineData: {
                     mimeType: 'image/jpeg',
                     data: base64Image, 
                   },
                 },
-                { text: prompt },
+                
               ],
             },
           ],
@@ -43,7 +44,6 @@ export default async function handler(req, res) {
             candidateCount: 1,
             seed,
           },
-          responseModality: ['IMAGE'],
         }),
       }
     );
@@ -53,6 +53,7 @@ export default async function handler(req, res) {
 
     res.status(200).json({
       generatedImageUrl: `data:image/jpeg;base64,${imageData}`,
+      result: result,
     });
   } catch (err) {
     console.error(err);
