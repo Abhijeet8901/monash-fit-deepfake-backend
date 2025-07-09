@@ -52,11 +52,9 @@ export default async function handler(req, res) {
     );
 
     const result = await geminiRes.json();
-    const imageData = result?.candidates?.[0]?.content?.parts?.find(p => p.inlineData)?.inlineData?.data;
-
+    
     res.status(200).json({
-      generatedImageUrl: `data:image/jpeg;base64,${imageData}`
-
+      result: result,
     });
   } catch (err) {
     console.error(err);
