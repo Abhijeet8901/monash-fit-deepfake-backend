@@ -32,20 +32,20 @@ export default async function handler(req, res) {
                 {
                   inlineData: {
                     mimeType: 'image/jpeg',
-                    data: base64Image, 
-                  },
-                },
+                    data: base64Image 
+                  }
+                }
                 
-              ],
-            },
+              ]
+            }
           ],
           generationConfig: {
             temperature: 0.8,
             candidateCount: 1,
             seed: seed,
-            responseModalities: ["TEXT", "IMAGE"],
-          },
-        }),
+            responseModalities: ["TEXT", "IMAGE"]
+          }
+        })
       }
     );
 
